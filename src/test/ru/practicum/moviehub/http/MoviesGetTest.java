@@ -14,7 +14,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class MoviesGetTest extends MoviesApiTest{
+public class MoviesGetTest extends MoviesApiTest {
 
 
     @DisplayName("возвращает пустой список, если нет фильмов")
