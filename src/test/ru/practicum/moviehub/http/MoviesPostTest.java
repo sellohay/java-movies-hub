@@ -23,10 +23,8 @@ public class MoviesPostTest extends MoviesApiTest {
     @Test
     public void testPostMoviesCorrect() throws IOException, InterruptedException {
         String requestBody = """
-                {
-                    "title": "Интерстеллар",
-                    "year": 2014
-                }
+                    {"title": "Интерстеллар",
+                    "year": 2014}
                 """;
         HttpRequest req = HttpRequest.newBuilder()
                 .POST(HttpRequest.BodyPublishers.ofString(requestBody))
@@ -45,9 +43,9 @@ public class MoviesPostTest extends MoviesApiTest {
                 "Content-Type должен содержать формат данных и кодировку");
 
         Movie movie = gson.fromJson(resp.body(), Movie.class);
-        assertEquals(1, movie.getId() );
-        assertEquals("Интерстеллар", movie.getTitle() );
-        assertEquals(2014, movie.getYear() );
+        assertEquals(1, movie.getId());
+        assertEquals("Интерстеллар", movie.getTitle());
+        assertEquals(2014, movie.getYear());
 
     }
 
@@ -55,10 +53,8 @@ public class MoviesPostTest extends MoviesApiTest {
     @Test
     public void testPostMovies_EmptyTitle() throws IOException, InterruptedException {
         String requestBody = """
-                {
-                    "title": "",
-                    "year": 2000
-                }
+                {"title": "",
+                 "year": 2000}
                 """;
         HttpRequest req = HttpRequest.newBuilder()
                 .POST(HttpRequest.BodyPublishers.ofString(requestBody))
@@ -84,12 +80,10 @@ public class MoviesPostTest extends MoviesApiTest {
     @Test
     public void testPostMovies_TitleTooLong() throws IOException, InterruptedException {
         String requestBody = """
-                {
-                    "title": "очень длинное название фильма ааааааааааааааааааааааааааааааааааааааааааааа
+                {"title": "очень длинное название фильма ааааааааааааааааааааааааааааааааааааааааааааа
                 """ + """
                     аааааааааааааааааааааааааа",
-                    "year": 2000
-                }
+                    "year": 2000}
                 """;
         HttpRequest req = HttpRequest.newBuilder()
                 .POST(HttpRequest.BodyPublishers.ofString(requestBody))
@@ -115,10 +109,8 @@ public class MoviesPostTest extends MoviesApiTest {
     @Test
     public void testPostMovies_YearIncorrect1() throws IOException, InterruptedException {
         String requestBody = """
-                {
-                    "title": "Очень древний фильм",
-                    "year": 1869
-                }
+                {"title": "Очень древний фильм",
+                 "year": 1869}
                 """;
         HttpRequest req = HttpRequest.newBuilder()
                 .POST(HttpRequest.BodyPublishers.ofString(requestBody))
@@ -145,10 +137,8 @@ public class MoviesPostTest extends MoviesApiTest {
     @Test
     public void testPostMovies_YearIncorrect2() throws IOException, InterruptedException {
         String requestBody = """
-                {
-                    "title": "Фильм из будущего",
-                    "year": 2030
-                }
+                {"title": "Фильм из будущего",
+                 "year": 2030}
                 """;
         HttpRequest req = HttpRequest.newBuilder()
                 .POST(HttpRequest.BodyPublishers.ofString(requestBody))
@@ -175,10 +165,8 @@ public class MoviesPostTest extends MoviesApiTest {
     @Test
     public void testPostMovies_ContentTypeIncorrect() throws IOException, InterruptedException {
         String requestBody = """
-                {
-                    "title": "Интерстеллар",
-                    "year": 2014
-                }
+                {"title": "Интерстеллар",
+                 "year": 2014}
                 """;
         HttpRequest req = HttpRequest.newBuilder()
                 .POST(HttpRequest.BodyPublishers.ofString(requestBody))
@@ -199,9 +187,8 @@ public class MoviesPostTest extends MoviesApiTest {
     @Test
     public void testPostMovies_IncorrectJson() throws IOException, InterruptedException {
         String requestBody = """
-                {
-                    "title": "Интерстеллар",
-                    "year": 2014
+                {"title": "Интерстеллар",
+                 "year": 2014
                 """;
         HttpRequest req = HttpRequest.newBuilder()
                 .POST(HttpRequest.BodyPublishers.ofString(requestBody))
