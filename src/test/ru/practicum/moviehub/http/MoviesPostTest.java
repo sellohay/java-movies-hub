@@ -22,10 +22,8 @@ public class MoviesPostTest extends MoviesApiTest {
     @DisplayName("добавляет фильм при корректных данных")
     @Test
     public void testPostMoviesCorrect() throws IOException, InterruptedException {
-        String requestBody = """
-                    {"title": "Интерстеллар",
-                    "year": 2014}
-                """;
+        // при записи через тройные кавычки не проходит checkstyle
+        String requestBody = "{\"title\": \"Интерстеллар\", \"year\": 2014}";
         HttpRequest req = HttpRequest.newBuilder()
                 .POST(HttpRequest.BodyPublishers.ofString(requestBody))
                 .uri(URI.create(BASE + "/movies"))
@@ -52,10 +50,7 @@ public class MoviesPostTest extends MoviesApiTest {
     @DisplayName("возвращает ошибку при пустом title")
     @Test
     public void testPostMovies_EmptyTitle() throws IOException, InterruptedException {
-        String requestBody = """
-                {"title": "",
-                 "year": 2000}
-                """;
+        String requestBody = "{\"title\": \"\",\"year\": 2000}";;
         HttpRequest req = HttpRequest.newBuilder()
                 .POST(HttpRequest.BodyPublishers.ofString(requestBody))
                 .uri(URI.create(BASE + "/movies"))
@@ -79,12 +74,9 @@ public class MoviesPostTest extends MoviesApiTest {
     @DisplayName("возвращает ошибку при слишком длинном title (> 100 символов)")
     @Test
     public void testPostMovies_TitleTooLong() throws IOException, InterruptedException {
-        String requestBody = """
-                {"title": "очень длинное название фильма ааааааааааааааааааааааааааааааааааааааааааааа
-                """ + """
-                    аааааааааааааааааааааааааа",
-                    "year": 2000}
-                """;
+        String requestBody = "{\"title\": \"очень длинное название фильма аааааааааааааааааааааааааааааааааааааааааа" +
+                "ааааааааааааааааааааааааааааа\", \"year\": 2000}";
+
         HttpRequest req = HttpRequest.newBuilder()
                 .POST(HttpRequest.BodyPublishers.ofString(requestBody))
                 .uri(URI.create(BASE + "/movies"))
@@ -108,10 +100,7 @@ public class MoviesPostTest extends MoviesApiTest {
     @DisplayName("возвращает ошибку при неверном year (<1888)")
     @Test
     public void testPostMovies_YearIncorrect1() throws IOException, InterruptedException {
-        String requestBody = """
-                {"title": "Очень древний фильм",
-                 "year": 1869}
-                """;
+        String requestBody = "{\"title\": \"Очень древний фильм\", \"year\": 1869} ";
         HttpRequest req = HttpRequest.newBuilder()
                 .POST(HttpRequest.BodyPublishers.ofString(requestBody))
                 .uri(URI.create(BASE + "/movies"))
@@ -136,10 +125,7 @@ public class MoviesPostTest extends MoviesApiTest {
     @DisplayName("возвращает ошибку при неверном year (>2027)")
     @Test
     public void testPostMovies_YearIncorrect2() throws IOException, InterruptedException {
-        String requestBody = """
-                {"title": "Фильм из будущего",
-                 "year": 2030}
-                """;
+        String requestBody = "{\"title\": \"Фильм из будущего\", \"year\": 2030}";
         HttpRequest req = HttpRequest.newBuilder()
                 .POST(HttpRequest.BodyPublishers.ofString(requestBody))
                 .uri(URI.create(BASE + "/movies"))
@@ -164,10 +150,7 @@ public class MoviesPostTest extends MoviesApiTest {
     @DisplayName("возвращает ошибку при неправильном Content-Type")
     @Test
     public void testPostMovies_ContentTypeIncorrect() throws IOException, InterruptedException {
-        String requestBody = """
-                {"title": "Интерстеллар",
-                 "year": 2014}
-                """;
+        String requestBody = "{\"title\": \"Интерстеллар\", \"year\": 2014}";
         HttpRequest req = HttpRequest.newBuilder()
                 .POST(HttpRequest.BodyPublishers.ofString(requestBody))
                 .uri(URI.create(BASE + "/movies"))
@@ -186,10 +169,7 @@ public class MoviesPostTest extends MoviesApiTest {
     @DisplayName("возвращает ошибку при некорректном JSON")
     @Test
     public void testPostMovies_IncorrectJson() throws IOException, InterruptedException {
-        String requestBody = """
-                {"title": "Интерстеллар",
-                 "year": 2014
-                """;
+        String requestBody = "{\"title\": \"Интерстеллар\", \"year\": 2014";
         HttpRequest req = HttpRequest.newBuilder()
                 .POST(HttpRequest.BodyPublishers.ofString(requestBody))
                 .uri(URI.create(BASE + "/movies"))
