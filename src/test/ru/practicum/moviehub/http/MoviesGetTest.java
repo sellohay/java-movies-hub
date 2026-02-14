@@ -13,6 +13,8 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static ru.practicum.moviehub.http.BaseHttpHandler.CT_JSON;
+import static ru.practicum.moviehub.http.MoviesHandler.MOVIES_PATH;
 
 public class MoviesGetTest extends MoviesApiTest {
 
@@ -22,7 +24,7 @@ public class MoviesGetTest extends MoviesApiTest {
     void getMovies_whenEmpty_returnsEmptyArray() throws Exception {
         HttpRequest req = HttpRequest.newBuilder()
                 .GET()
-                .uri(URI.create(BASE + "/movies"))
+                .uri(URI.create(BASE + MOVIES_PATH))
                 .build();
         HttpResponse.BodyHandler<String> responseBodyHandler =
                 HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8);
@@ -32,7 +34,7 @@ public class MoviesGetTest extends MoviesApiTest {
 
         String contentTypeHeaderValue =
                 resp.headers().firstValue("Content-Type").orElse("");
-        assertEquals("application/json; charset=UTF-8", contentTypeHeaderValue,
+        assertEquals(CT_JSON, contentTypeHeaderValue,
                 "Content-Type должен содержать формат данных и кодировку");
 
         String body = resp.body().trim();
@@ -49,7 +51,7 @@ public class MoviesGetTest extends MoviesApiTest {
 
         HttpRequest req = HttpRequest.newBuilder()
                 .GET()
-                .uri(URI.create(BASE + "/movies"))
+                .uri(URI.create(BASE + MOVIES_PATH))
                 .build();
         HttpResponse.BodyHandler<String> responseBodyHandler =
                 HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8);
@@ -59,7 +61,7 @@ public class MoviesGetTest extends MoviesApiTest {
 
         String contentTypeHeaderValue =
                 resp.headers().firstValue("Content-Type").orElse("");
-        assertEquals("application/json; charset=UTF-8", contentTypeHeaderValue,
+        assertEquals(CT_JSON, contentTypeHeaderValue,
                 "Content-Type должен содержать формат данных и кодировку");
 
         List<Movie> movies = gson.fromJson(resp.body(), new ListOfMoviesTypeToken().getType());

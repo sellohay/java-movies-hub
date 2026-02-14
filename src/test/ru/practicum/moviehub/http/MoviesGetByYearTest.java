@@ -14,6 +14,8 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static ru.practicum.moviehub.http.BaseHttpHandler.CT_JSON;
+import static ru.practicum.moviehub.http.MoviesHandler.MOVIES_PATH;
 
 public class MoviesGetByYearTest extends MoviesGetTest {
 
@@ -28,7 +30,7 @@ public class MoviesGetByYearTest extends MoviesGetTest {
 
         HttpRequest req = HttpRequest.newBuilder()
                 .GET()
-                .uri(URI.create(BASE + "/movies?year=2010"))
+                .uri(URI.create(BASE + MOVIES_PATH + "?year=2010"))
                 .build();
         HttpResponse.BodyHandler<String> responseBodyHandler =
                 HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8);
@@ -38,7 +40,7 @@ public class MoviesGetByYearTest extends MoviesGetTest {
 
         String contentTypeHeaderValue =
                 resp.headers().firstValue("Content-Type").orElse("");
-        assertEquals("application/json; charset=UTF-8", contentTypeHeaderValue,
+        assertEquals(CT_JSON, contentTypeHeaderValue,
                 "Content-Type должен содержать формат данных и кодировку");
 
         List<Movie> movies = gson.fromJson(resp.body(), new ListOfMoviesTypeToken().getType());
@@ -65,7 +67,7 @@ public class MoviesGetByYearTest extends MoviesGetTest {
 
         HttpRequest req = HttpRequest.newBuilder()
                 .GET()
-                .uri(URI.create(BASE + "/movies?year=2007"))
+                .uri(URI.create(BASE + MOVIES_PATH + "?year=2007"))
                 .build();
         HttpResponse.BodyHandler<String> responseBodyHandler =
                 HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8);
@@ -75,7 +77,7 @@ public class MoviesGetByYearTest extends MoviesGetTest {
 
         String contentTypeHeaderValue =
                 resp.headers().firstValue("Content-Type").orElse("");
-        assertEquals("application/json; charset=UTF-8", contentTypeHeaderValue,
+        assertEquals(CT_JSON, contentTypeHeaderValue,
                 "Content-Type должен содержать формат данных и кодировку");
 
         String body = resp.body().trim();
@@ -92,7 +94,7 @@ public class MoviesGetByYearTest extends MoviesGetTest {
 
         HttpRequest req = HttpRequest.newBuilder()
                 .GET()
-                .uri(URI.create(BASE + "/movies?year=num"))
+                .uri(URI.create(BASE + MOVIES_PATH + "?year=num"))
                 .build();
         HttpResponse.BodyHandler<String> responseBodyHandler =
                 HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8);
@@ -102,7 +104,7 @@ public class MoviesGetByYearTest extends MoviesGetTest {
 
         String contentTypeHeaderValue =
                 resp.headers().firstValue("Content-Type").orElse("");
-        assertEquals("application/json; charset=UTF-8", contentTypeHeaderValue,
+        assertEquals(CT_JSON, contentTypeHeaderValue,
                 "Content-Type должен содержать формат данных и кодировку");
 
         ErrorResponse errorResponse = gson.fromJson(resp.body(), ErrorResponse.class);

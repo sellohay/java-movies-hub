@@ -14,6 +14,8 @@ import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static ru.practicum.moviehub.http.BaseHttpHandler.CT_JSON;
+import static ru.practicum.moviehub.http.MoviesHandler.MOVIES_PATH;
 
 public abstract class MoviesApiTest {
 
@@ -51,7 +53,7 @@ public abstract class MoviesApiTest {
                 """;
         HttpRequest req = HttpRequest.newBuilder()
                 .PUT(HttpRequest.BodyPublishers.ofString(requestBody))
-                .uri(URI.create(BASE + "/movies"))
+                .uri(URI.create(BASE + MOVIES_PATH))
                 .build();
         HttpResponse.BodyHandler<String> responseBodyHandler =
                 HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8);
@@ -61,7 +63,7 @@ public abstract class MoviesApiTest {
 
         String contentTypeHeaderValue =
                 resp.headers().firstValue("Content-Type").orElse("");
-        assertEquals("application/json; charset=UTF-8", contentTypeHeaderValue,
+        assertEquals(CT_JSON, contentTypeHeaderValue,
                 "Content-Type должен содержать формат данных и кодировку");
 
         ErrorResponse errorResponse = gson.fromJson(resp.body(), ErrorResponse.class);

@@ -13,8 +13,7 @@ import java.nio.charset.StandardCharsets;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static ru.practicum.moviehub.http.MoviesHandler.MAXIMUM_YEAR;
-import static ru.practicum.moviehub.http.MoviesHandler.MINIMUM_YEAR;
+import static ru.practicum.moviehub.http.MoviesHandler.*;
 
 public class MoviesPostTest extends MoviesApiTest {
 
@@ -26,7 +25,7 @@ public class MoviesPostTest extends MoviesApiTest {
         String requestBody = "{\"title\": \"Интерстеллар\", \"year\": 2014}";
         HttpRequest req = HttpRequest.newBuilder()
                 .POST(HttpRequest.BodyPublishers.ofString(requestBody))
-                .uri(URI.create(BASE + "/movies"))
+                .uri(URI.create(BASE + MOVIES_PATH))
                 .header("Content-Type", "application/json; charset=UTF-8")
                 .build();
         HttpResponse.BodyHandler<String> responseBodyHandler =
@@ -37,7 +36,7 @@ public class MoviesPostTest extends MoviesApiTest {
 
         String contentTypeHeaderValue =
                 resp.headers().firstValue("Content-Type").orElse("");
-        assertEquals("application/json; charset=UTF-8", contentTypeHeaderValue,
+        assertEquals(CT_JSON, contentTypeHeaderValue,
                 "Content-Type должен содержать формат данных и кодировку");
 
         Movie movie = gson.fromJson(resp.body(), Movie.class);
@@ -53,7 +52,7 @@ public class MoviesPostTest extends MoviesApiTest {
         String requestBody = "{\"title\": \"\",\"year\": 2000}";;
         HttpRequest req = HttpRequest.newBuilder()
                 .POST(HttpRequest.BodyPublishers.ofString(requestBody))
-                .uri(URI.create(BASE + "/movies"))
+                .uri(URI.create(BASE + MOVIES_PATH))
                 .header("Content-Type", "application/json; charset=UTF-8")
                 .build();
         HttpResponse.BodyHandler<String> responseBodyHandler =
@@ -63,7 +62,7 @@ public class MoviesPostTest extends MoviesApiTest {
         assertEquals(422, resp.statusCode(), "POST /movies должен возвращать 422");
         String contentTypeHeaderValue =
                 resp.headers().firstValue("Content-Type").orElse("");
-        assertEquals("application/json; charset=UTF-8", contentTypeHeaderValue,
+        assertEquals(CT_JSON, contentTypeHeaderValue,
                 "Content-Type должен содержать формат данных и кодировку");
 
         ErrorResponse errorResponse = gson.fromJson(resp.body(), ErrorResponse.class);
@@ -79,7 +78,7 @@ public class MoviesPostTest extends MoviesApiTest {
 
         HttpRequest req = HttpRequest.newBuilder()
                 .POST(HttpRequest.BodyPublishers.ofString(requestBody))
-                .uri(URI.create(BASE + "/movies"))
+                .uri(URI.create(BASE + MOVIES_PATH))
                 .header("Content-Type", "application/json; charset=UTF-8")
                 .build();
         HttpResponse.BodyHandler<String> responseBodyHandler =
@@ -89,7 +88,7 @@ public class MoviesPostTest extends MoviesApiTest {
         assertEquals(422, resp.statusCode(), "POST /movies должен возвращать 422");
         String contentTypeHeaderValue =
                 resp.headers().firstValue("Content-Type").orElse("");
-        assertEquals("application/json; charset=UTF-8", contentTypeHeaderValue,
+        assertEquals(CT_JSON, contentTypeHeaderValue,
                 "Content-Type должен содержать формат данных и кодировку");
 
         ErrorResponse errorResponse = gson.fromJson(resp.body(), ErrorResponse.class);
@@ -103,7 +102,7 @@ public class MoviesPostTest extends MoviesApiTest {
         String requestBody = "{\"title\": \"Очень древний фильм\", \"year\": 1869} ";
         HttpRequest req = HttpRequest.newBuilder()
                 .POST(HttpRequest.BodyPublishers.ofString(requestBody))
-                .uri(URI.create(BASE + "/movies"))
+                .uri(URI.create(BASE + MOVIES_PATH))
                 .header("Content-Type", "application/json; charset=UTF-8")
                 .build();
         HttpResponse.BodyHandler<String> responseBodyHandler =
@@ -113,7 +112,7 @@ public class MoviesPostTest extends MoviesApiTest {
         assertEquals(422, resp.statusCode(), "POST /movies должен возвращать 422");
         String contentTypeHeaderValue =
                 resp.headers().firstValue("Content-Type").orElse("");
-        assertEquals("application/json; charset=UTF-8", contentTypeHeaderValue,
+        assertEquals(CT_JSON, contentTypeHeaderValue,
                 "Content-Type должен содержать формат данных и кодировку");
 
         ErrorResponse errorResponse = gson.fromJson(resp.body(), ErrorResponse.class);
@@ -128,7 +127,7 @@ public class MoviesPostTest extends MoviesApiTest {
         String requestBody = "{\"title\": \"Фильм из будущего\", \"year\": 2030}";
         HttpRequest req = HttpRequest.newBuilder()
                 .POST(HttpRequest.BodyPublishers.ofString(requestBody))
-                .uri(URI.create(BASE + "/movies"))
+                .uri(URI.create(BASE + MOVIES_PATH))
                 .header("Content-Type", "application/json; charset=UTF-8")
                 .build();
         HttpResponse.BodyHandler<String> responseBodyHandler =
@@ -138,7 +137,7 @@ public class MoviesPostTest extends MoviesApiTest {
         assertEquals(422, resp.statusCode(), "POST /movies должен возвращать 422");
         String contentTypeHeaderValue =
                 resp.headers().firstValue("Content-Type").orElse("");
-        assertEquals("application/json; charset=UTF-8", contentTypeHeaderValue,
+        assertEquals(CT_JSON, contentTypeHeaderValue,
                 "Content-Type должен содержать формат данных и кодировку");
 
         ErrorResponse errorResponse = gson.fromJson(resp.body(), ErrorResponse.class);
@@ -153,7 +152,7 @@ public class MoviesPostTest extends MoviesApiTest {
         String requestBody = "{\"title\": \"Интерстеллар\", \"year\": 2014}";
         HttpRequest req = HttpRequest.newBuilder()
                 .POST(HttpRequest.BodyPublishers.ofString(requestBody))
-                .uri(URI.create(BASE + "/movies"))
+                .uri(URI.create(BASE + MOVIES_PATH))
                 .header("Content-Type", "text/html; charset=UTF-8")
                 .build();
         HttpResponse.BodyHandler<String> responseBodyHandler =
@@ -172,7 +171,7 @@ public class MoviesPostTest extends MoviesApiTest {
         String requestBody = "{\"title\": \"Интерстеллар\", \"year\": 2014";
         HttpRequest req = HttpRequest.newBuilder()
                 .POST(HttpRequest.BodyPublishers.ofString(requestBody))
-                .uri(URI.create(BASE + "/movies"))
+                .uri(URI.create(BASE + MOVIES_PATH))
                 .header("Content-Type", "application/json; charset=UTF-8")
                 .build();
         HttpResponse.BodyHandler<String> responseBodyHandler =

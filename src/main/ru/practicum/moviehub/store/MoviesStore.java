@@ -27,15 +27,11 @@ public class MoviesStore {
     }
 
     public Optional<Movie> getMovie(long id) {
-        return movies.containsKey(id) ? Optional.of(movies.get(id)) : Optional.empty();
+        return Optional.ofNullable(movies.get(id));
     }
 
-    public boolean deleteMovie(long id) {
-        if (movies.containsKey(id)) {
-            movies.remove(id);
-            return true;
-        }
-        return false;
+    public Movie deleteMovie(long id) {
+        return movies.remove(id);
     }
 
     public List<Movie> getMoviesByYear(int year) {

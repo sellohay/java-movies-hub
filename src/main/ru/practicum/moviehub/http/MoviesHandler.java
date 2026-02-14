@@ -20,6 +20,7 @@ public class MoviesHandler extends BaseHttpHandler {
     public static final int MINIMUM_YEAR = 1888;
     public static final int MAXIMUM_YEAR = 2027;
     public static final int MAXIMUM_LENGTH = 100;
+    public static final String MOVIES_PATH = "/movies";
 
     public MoviesHandler(MoviesStore moviesStore) {
         super(moviesStore);
@@ -32,7 +33,7 @@ public class MoviesHandler extends BaseHttpHandler {
         String[] parts = path.split("/");
         String query = ex.getRequestURI().getQuery();
         if (method.equalsIgnoreCase("GET")) {
-            if (path.equalsIgnoreCase("/movies") && query == null) {
+            if (path.equalsIgnoreCase(MOVIES_PATH) && query == null) {
                 handleGetMovies(ex);
                 return;
             }
@@ -45,7 +46,7 @@ public class MoviesHandler extends BaseHttpHandler {
                 return;
             }
         }
-        if (method.equalsIgnoreCase("POST") && path.equalsIgnoreCase("/movies")) {
+        if (method.equalsIgnoreCase("POST") && path.equalsIgnoreCase(MOVIES_PATH)) {
             handlePostMovie(ex);
             return;
         }
@@ -90,8 +91,8 @@ public class MoviesHandler extends BaseHttpHandler {
             return;
         }
 
-        boolean isDeleted = moviesStore.deleteMovie(movieId);
-        if (!isDeleted) {
+        Movie deletedMovie = moviesStore.deleteMovie(movieId);
+        if (deletedMovie == null) {
             ErrorResponse errorResponse = new ErrorResponse("Фильм не найден");
             sendJson(ex, 404, gson.toJson(errorResponse));
             return;

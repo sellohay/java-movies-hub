@@ -12,6 +12,8 @@ import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static ru.practicum.moviehub.http.BaseHttpHandler.CT_JSON;
+import static ru.practicum.moviehub.http.MoviesHandler.MOVIES_PATH;
 
 public class MoviesGetByIdTest extends MoviesApiTest {
 
@@ -24,7 +26,7 @@ public class MoviesGetByIdTest extends MoviesApiTest {
 
         HttpRequest req = HttpRequest.newBuilder()
                 .GET()
-                .uri(URI.create(BASE + "/movies/1"))
+                .uri(URI.create(BASE + MOVIES_PATH + "/1"))
                 .build();
         HttpResponse.BodyHandler<String> responseBodyHandler =
                 HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8);
@@ -34,7 +36,7 @@ public class MoviesGetByIdTest extends MoviesApiTest {
 
         String contentTypeHeaderValue =
                 resp.headers().firstValue("Content-Type").orElse("");
-        assertEquals("application/json; charset=UTF-8", contentTypeHeaderValue,
+        assertEquals(CT_JSON, contentTypeHeaderValue,
                 "Content-Type должен содержать формат данных и кодировку");
 
         Movie respMovie = gson.fromJson(resp.body(), Movie.class);
@@ -53,7 +55,7 @@ public class MoviesGetByIdTest extends MoviesApiTest {
 
         HttpRequest req = HttpRequest.newBuilder()
                 .GET()
-                .uri(URI.create(BASE + "/movies/3"))
+                .uri(URI.create(BASE + MOVIES_PATH + "/3"))
                 .build();
         HttpResponse.BodyHandler<String> responseBodyHandler =
                 HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8);
@@ -63,7 +65,7 @@ public class MoviesGetByIdTest extends MoviesApiTest {
 
         String contentTypeHeaderValue =
                 resp.headers().firstValue("Content-Type").orElse("");
-        assertEquals("application/json; charset=UTF-8", contentTypeHeaderValue,
+        assertEquals(CT_JSON, contentTypeHeaderValue,
                 "Content-Type должен содержать формат данных и кодировку");
 
         ErrorResponse errorResponse = gson.fromJson(resp.body(), ErrorResponse.class);
@@ -78,7 +80,7 @@ public class MoviesGetByIdTest extends MoviesApiTest {
 
         HttpRequest req = HttpRequest.newBuilder()
                 .GET()
-                .uri(URI.create(BASE + "/movies/num"))
+                .uri(URI.create(BASE + MOVIES_PATH + "/num"))
                 .build();
         HttpResponse.BodyHandler<String> responseBodyHandler =
                 HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8);
@@ -88,7 +90,7 @@ public class MoviesGetByIdTest extends MoviesApiTest {
 
         String contentTypeHeaderValue =
                 resp.headers().firstValue("Content-Type").orElse("");
-        assertEquals("application/json; charset=UTF-8", contentTypeHeaderValue,
+        assertEquals(CT_JSON, contentTypeHeaderValue,
                 "Content-Type должен содержать формат данных и кодировку");
 
         ErrorResponse errorResponse = gson.fromJson(resp.body(), ErrorResponse.class);
